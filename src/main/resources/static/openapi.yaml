@@ -1,0 +1,374 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Projeto para manter o cadastro e agendamento de Consultas",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Controle de Usuario",
+      "description": "Operações relacionadas ao gerenciamento de usuários."
+    },
+    {
+      "name": "Controle de Consulta",
+      "description": "Operações relacionadas ao agendamento e gerenciamento de consultas."
+    }
+  ],
+  "paths": {
+    "/usuarios/{id}": {
+      "get": {
+        "tags": ["Controle de Usuario"],
+        "operationId": "getUsuarioById",
+        "summary": "Recupera um usuário pelo ID",
+        "description": "Obtém os detalhes de um usuário específico utilizando seu ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Controle de Usuario"],
+        "operationId": "updateUsuario",
+        "summary": "Atualiza os dados de um usuário",
+        "description": "Atualiza as informações de um usuário existente com base no ID fornecido.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Controle de Usuario"],
+        "operationId": "deleteUsuario",
+        "summary": "Remove um usuário pelo ID",
+        "description": "Deleta um usuário específico utilizando seu ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário deletado com sucesso."
+          }
+        }
+      }
+    },
+    "/consultas/{id}": {
+      "get": {
+        "tags": ["Controle de Consulta"],
+        "operationId": "BuscarConsulta",
+        "summary": "Busca uma consulta pelo ID",
+        "description": "Recupera os detalhes de uma consulta específica utilizando seu ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta encontrada com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Consulta"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Controle de Consulta"],
+        "operationId": "AtualizarConsulta",
+        "summary": "Atualiza os dados de uma consulta",
+        "description": "Atualiza as informações de uma consulta existente com base no ID fornecido.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Consulta"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Consulta atualizada com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Consulta"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Controle de Consulta"],
+        "operationId": "DeletarConsulta",
+        "summary": "Deleta uma consulta pelo ID",
+        "description": "Remove uma consulta específica utilizando seu ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta deletada com sucesso."
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "get": {
+        "tags": ["Controle de Usuario"],
+        "operationId": "getAllUsuarios",
+        "summary": "Recupera todos os usuários",
+        "description": "Lista todos os usuários cadastrados no sistema.",
+        "responses": {
+          "200": {
+            "description": "Usuários encontrados com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Controle de Usuario"],
+        "operationId": "cadastrarUsuario",
+        "summary": "Cadastra um novo usuário",
+        "description": "Cria um novo usuário no sistema com os dados fornecidos.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário cadastrado com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consultas": {
+      "get": {
+        "tags": ["Controle de Consulta"],
+        "operationId": "BuscarConsultas",
+        "summary": "Recupera todas as consultas",
+        "description": "Lista todas as consultas cadastradas no sistema.",
+        "responses": {
+          "200": {
+            "description": "Consultas encontradas com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Consulta"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Controle de Consulta"],
+        "operationId": "CadastrarConsulta",
+        "summary": "Cadastra uma nova consulta",
+        "description": "Cria uma nova consulta no sistema com os dados fornecidos.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Consulta"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Consulta cadastrada com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Consulta"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID único do usuário."
+          },
+          "nomeUsuario": {
+            "type": "string",
+            "description": "Nome completo do usuário."
+          },
+          "email": {
+            "type": "string",
+            "description": "Endereço de email do usuário."
+          },
+          "cpf": {
+            "type": "string",
+            "description": "Número do CPF do usuário."
+          },
+          "telefone": {
+            "type": "string",
+            "description": "Número de telefone do usuário."
+          },
+          "dataNascimento": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data de nascimento do usuário."
+          }
+        },
+        "required": ["nomeUsuario", "email", "cpf"]
+      },
+      "Consulta": {
+        "type": "object",
+        "properties": {
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID único da consulta."
+          },
+          "dataConsulta": {
+            "type": "string",
+            "description": "Data e hora da consulta."
+          },
+          "profissional": {
+            "type": "string",
+            "description": "Nome do profissional responsável pela consulta."
+          },
+          "especialidade": {
+            "type": "string",
+            "description": "Especialidade médica relacionada à consulta."
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/Usuario",
+            "description": "Usuário associado à consulta."
+          }
+        },
+        "required": ["dataConsulta", "profissional", "especialidade", "usuario"]
+      }
+    }
+  }
+}

@@ -51,9 +51,9 @@ public class UsuarioResource {
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteUsuario(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
         usuarioService.delete(id);
-        return HttpStatus.NO_CONTENT;
+        return ResponseEntity.noContent().build();
     }
 
 }

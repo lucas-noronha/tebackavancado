@@ -1,5 +1,6 @@
 package br.com.lucasnoronha.medicalconsult.usuario.services;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,8 +14,8 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public Usuario getById(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).get();
-        return usuario;
+        return usuarioRepository.findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado", id));
     }
 
     public List<Usuario> getAll() {
@@ -31,9 +32,11 @@ public class UsuarioService {
     public Usuario update(Long id, Usuario entity) {
         Usuario actual = usuarioRepository.findById(id).get();
         if (actual != null) {
-            Long safeId = actual.getIdUsuario();
-            actual = entity;
-            actual.setIdUsuario(safeId);
+            actual.setNomeUsuario(entity.getNomeUsuario());
+            actual.setEmail(entity.getEmail());
+            actual.setTelefone(entity.getTelefone());
+            actual.setDataNascimento(entity.getDataNascimento());
+            actual.setPermissao(entity.getPermissao());
             usuarioRepository.save(actual);
             return actual;
         }

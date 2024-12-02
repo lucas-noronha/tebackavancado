@@ -1,10 +1,12 @@
 package br.com.lucasnoronha.medicalconsult.consulta.services;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import br.com.lucasnoronha.medicalconsult.consulta.domain.Consulta;
 import br.com.lucasnoronha.medicalconsult.consulta.repositories.ConsultaRepository;
+import br.com.lucasnoronha.medicalconsult.exception.ExceptionDataIntegrityViolation;
 
 @Service
 public class ConsultaService {
@@ -37,11 +39,16 @@ public class ConsultaService {
     }
 
     public Consulta buscarConsulta(Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Consulta não encontrada", id));
     }
 
     public void removerConsulta(Long id) {
-        repository.deleteById(id);
+        try{
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new ExceptionDataIntegrityViolation("Não é possível excluir, porque há entidades relacionadas.");
+        }
     }
 
 }

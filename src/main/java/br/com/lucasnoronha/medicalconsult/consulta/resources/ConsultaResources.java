@@ -44,8 +44,9 @@ public class ConsultaResources {
     }
 
     @DeleteMapping("{id}")
-    public void DeletarConsulta(@PathVariable Long id) {
+    public ResponseEntity<Void> DeletarConsulta(@PathVariable Long id) {
         service.removerConsulta(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
